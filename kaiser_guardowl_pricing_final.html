@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guard Owl — Enterprise Pricing Proposal for Kaiser</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --color-bg: #ffffff; --color-bg-secondary: #f7f7f5; --color-bg-tertiary: #f0efe9;
+    --color-text-primary: #1a1a18; --color-text-secondary: #6b6b66; --color-text-tertiary: #9a9a94;
+    --color-border: rgba(0,0,0,0.12); --color-border-hover: rgba(0,0,0,0.22);
+    --radius-md: 8px; --radius-lg: 12px; --font: -apple-system, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #1c1c1a; --color-bg-secondary: #252523; --color-bg-tertiary: #2e2e2b;
+      --color-text-primary: #f0efe9; --color-text-secondary: #a0a09a; --color-text-tertiary: #6b6b66;
+      --color-border: rgba(255,255,255,0.12); --color-border-hover: rgba(255,255,255,0.22);
+    }
+  }
+  body { font-family: var(--font); background: var(--color-bg-tertiary); color: var(--color-text-primary); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .page { max-width: 880px; margin: 0 auto; }
+
+  /* Logo */
+  .logo-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 2rem; }
+  .logo-mark { width: 38px; height: 38px; background: #1a1a18; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+  .logo-mark svg { width: 22px; height: 22px; fill: white; }
+  .logo-text { font-size: 16px; font-weight: 500; }
+  .logo-sep { color: var(--color-text-tertiary); margin: 0 6px; }
+  .logo-client { font-size: 16px; color: var(--color-text-secondary); }
+
+  /* Hero */
+  .hero { background: var(--color-bg); border: 0.5px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem 2rem 1.75rem; margin-bottom: 1.75rem; }
+  .hero-eyebrow { font-size: 11px; font-weight: 500; color: #185FA5; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .hero-title { font-size: 26px; font-weight: 500; line-height: 1.25; margin-bottom: 14px; }
+  .hero-desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.75; margin-bottom: 1.5rem; max-width: 680px; }
+  .hero-divider { border: none; border-top: 0.5px solid var(--color-border); margin-bottom: 1.25rem; }
+  .hero-replace-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 12px; }
+  .replace-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; }
+  .replace-card { background: var(--color-bg-secondary); border: 0.5px solid var(--color-border); border-radius: var(--radius-md); padding: 12px 14px; }
+  .replace-card.old { opacity: 0.75; }
+  .replace-card-label { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .replace-card.old .replace-card-label { color: #A32D2D; }
+  .replace-card.new .replace-card-label { color: #0F6E56; }
+  .replace-card-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .replace-card.old .replace-card-name { color: var(--color-text-secondary); }
+  .replace-card-items { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+  .replace-card-items li { font-size: 12px; color: var(--color-text-secondary); display: flex; align-items: flex-start; gap: 5px; line-height: 1.5; }
+  .replace-arrow { display: flex; align-items: center; justify-content: center; }
+  .replace-arrow-inner { width: 32px; height: 32px; background: #E6F1FB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #185FA5; }
+  .workflow-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 0.5px solid var(--color-border); }
+  .workflow-item { text-align: center; padding: 10px 8px; background: var(--color-bg-secondary); border-radius: var(--radius-md); }
+  .workflow-icon { font-size: 18px; margin-bottom: 4px; }
+  .workflow-label { font-size: 11px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+  .workflow-sub { font-size: 10px; color: var(--color-text-tertiary); line-height: 1.4; }
+
+  /* Section label */
+  .section-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+
+  /* Plans */
+  .plans-top { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-bottom: 10px; }
+  .plan-card { border: 0.5px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.1rem; cursor: pointer; background: var(--color-bg); transition: border-color 0.15s, box-shadow 0.15s; }
+  .plan-card:hover { border-color: var(--color-border-hover); }
+  .plan-card.selected { border: 2px solid #378ADD; box-shadow: 0 0 0 3px rgba(55,138,221,0.1); }
+  .plan-card.selected .plan-name { color: #185FA5; }
+  .plan-enterprise { border: 0.5px solid #EF9F27; border-radius: var(--radius-lg); padding: 1.25rem; cursor: pointer; background: var(--color-bg); transition: border-color 0.15s, box-shadow 0.15s; margin-bottom: 1.75rem; }
+  .plan-enterprise:hover { border-color: #BA7517; }
+  .plan-enterprise.selected { border: 2px solid #BA7517; background: #FAEEDA; box-shadow: 0 0 0 3px rgba(186,117,23,0.1); }
+  .plan-enterprise.selected .plan-name { color: #633806; }
+  .ent-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .ent-price-note { font-size: 12px; color: #854F0B; margin-left: auto; text-align: right; line-height: 1.7; }
+  .ent-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .ent-col-label { font-size: 10px; font-weight: 500; color: #854F0B; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 0.5px solid rgba(239,159,39,0.4); }
+  .plan-name { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .plan-badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; display: inline-block; margin-bottom: 10px; font-weight: 500; }
+  .badge-core { background: #E6F1FB; color: #0C447C; }
+  .badge-pro { background: #EEEDFE; color: #3C3289; }
+  .badge-complete { background: #E1F5EE; color: #085041; }
+  .badge-enterprise { background: #FAEEDA; color: #633806; }
+  .plan-pricing { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 10px; line-height: 1.8; }
+  .plan-divider { border: none; border-top: 0.5px solid var(--color-border); margin: 10px 0; }
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .feature-list li { font-size: 12px; color: var(--color-text-secondary); display: flex; align-items: flex-start; gap: 7px; line-height: 1.5; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+  .dot-blue { background: #378ADD; } .dot-purple { background: #7F77DD; }
+  .dot-green { background: #1D9E75; } .dot-amber { background: #BA7517; }
+  .feat-label { font-size: 10px; font-weight: 500; padding: 1px 6px; border-radius: 10px; display: inline-block; margin-left: 3px; vertical-align: middle; }
+  .label-ai { background: #EEEDFE; color: #534AB7; }
+  .label-new { background: #E1F5EE; color: #0F6E56; }
+  .label-custom { background: #FAEEDA; color: #633806; }
+
+  /* Users */
+  .users-block { margin-bottom: 1.75rem; }
+  .slider-row { display: flex; align-items: center; gap: 14px; }
+  .slider-row input[type=range] { flex: 1; height: 4px; accent-color: #378ADD; cursor: pointer; }
+  .slider-end { font-size: 12px; color: var(--color-text-secondary); white-space: nowrap; }
+  .user-count-display { font-size: 24px; font-weight: 500; min-width: 130px; text-align: right; }
+  .user-count-display span { font-size: 14px; font-weight: 400; color: var(--color-text-secondary); }
+  .custom-users-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 10px 16px; border: 0.5px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg-secondary); }
+  .custom-users-row label { font-size: 13px; color: var(--color-text-secondary); flex: 1; }
+  .custom-users-row input[type=number] { width: 110px; font-size: 14px; padding: 5px 10px; border: 0.5px solid var(--color-border-hover); border-radius: var(--radius-md); background: var(--color-bg); color: var(--color-text-primary); font-family: var(--font); outline: none; }
+  .custom-users-row input:focus { border-color: #378ADD; }
+
+  /* Module */
+  .mod-row { border: 0.5px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg); transition: border-color 0.15s; overflow: hidden; margin-bottom: 1.75rem; }
+  .mod-row:hover { border-color: var(--color-border-hover); }
+  .mod-row.active { border-color: #378ADD; }
+  .mod-top { display: flex; align-items: flex-start; justify-content: space-between; padding: 14px 16px; cursor: pointer; gap: 14px; }
+  .mod-info { flex: 1; }
+  .mod-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .mod-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+  .mod-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+  .mod-price { font-size: 12px; color: var(--color-text-secondary); white-space: nowrap; text-align: right; }
+  .toggle { width: 38px; height: 22px; border-radius: 11px; background: var(--color-border-hover); position: relative; transition: background 0.2s; flex-shrink: 0; }
+  .toggle.on { background: #378ADD; }
+  .toggle::after { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: white; top: 2px; left: 2px; transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .toggle.on::after { left: 18px; }
+  .mod-expanded { padding: 0 16px 14px; border-top: 0.5px solid var(--color-border); display: none; }
+  .mod-expanded.visible { display: block; }
+  .mod-exp-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 0.06em; text-transform: uppercase; margin: 12px 0 8px; }
+  .vision-slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+  .vision-slider-row input[type=range] { flex: 1; accent-color: #378ADD; }
+  .vision-site-count { font-size: 20px; font-weight: 500; min-width: 80px; text-align: right; }
+  .vision-site-count span { font-size: 12px; font-weight: 400; color: var(--color-text-secondary); }
+  .vision-note { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 12px; line-height: 1.6; }
+  .detection-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  .detection-item { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border: 0.5px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .detection-item:hover { border-color: var(--color-border-hover); }
+  .detection-item.checked { border-color: #378ADD; background: #E6F1FB; }
+  .det-box { width: 16px; height: 16px; border-radius: 4px; border: 0.5px solid var(--color-border-hover); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: background 0.15s, border-color 0.15s; }
+  .detection-item.checked .det-box { background: #378ADD; border-color: #378ADD; }
+  .det-inner { width: 8px; height: 8px; border-radius: 2px; background: white; display: none; }
+  .detection-item.checked .det-inner { display: block; }
+  .det-label { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+  .detection-item.checked .det-label { color: #185FA5; }
+
+  /* Savings */
+  .savings-section { border: 0.5px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1.75rem; }
+  .savings-header { padding: 14px 16px; background: var(--color-bg-secondary); border-bottom: 0.5px solid var(--color-border); }
+  .savings-header-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+  .savings-header-sub { font-size: 12px; color: var(--color-text-secondary); }
+  .savings-inputs { display: grid; grid-template-columns: 1fr 1fr; }
+  .savings-input-cell { padding: 14px 16px; border-bottom: 0.5px solid var(--color-border); }
+  .savings-input-cell:first-child { border-right: 0.5px solid var(--color-border); }
+  .savings-input-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 3px; }
+  .savings-input-label strong { color: var(--color-text-primary); font-weight: 500; }
+  .savings-input-sublabel { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 8px; }
+  .savings-input-wrap { display: flex; align-items: center; gap: 6px; }
+  .savings-input-wrap .prefix { font-size: 14px; color: var(--color-text-secondary); }
+  .savings-input-wrap input { flex: 1; font-size: 15px; padding: 6px 10px; border: 0.5px solid var(--color-border-hover); border-radius: var(--radius-md); background: var(--color-bg); color: var(--color-text-primary); font-family: var(--font); outline: none; }
+  .savings-input-wrap input:focus { border-color: #378ADD; box-shadow: 0 0 0 2px rgba(55,138,221,0.12); }
+  .savings-input-wrap .suffix { font-size: 12px; color: var(--color-text-tertiary); white-space: nowrap; }
+  .savings-result { padding: 16px; background: var(--color-bg); transition: background 0.2s; }
+  .savings-result.has-savings { background: #E1F5EE; }
+  .savings-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+  .savings-metric { text-align: center; }
+  .savings-metric-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; line-height: 1.4; }
+  .savings-metric-value { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .savings-metric-value.positive { font-size: 22px; color: #0F6E56; }
+  .savings-metric-value.negative { color: #A32D2D; }
+  .savings-tagline { font-size: 12px; color: var(--color-text-secondary); text-align: center; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border); }
+  .savings-tagline.win { color: #0F6E56; font-weight: 500; font-size: 13px; }
+
+  /* Summary */
+  .summary { background: var(--color-bg-secondary); border-radius: var(--radius-lg); padding: 1.4rem; border: 0.5px solid var(--color-border); margin-bottom: 1.5rem; }
+  .s-row { display: flex; justify-content: space-between; font-size: 14px; padding: 5px 0; color: var(--color-text-secondary); }
+  .s-row.hidden { display: none; }
+  .s-divider { border: none; border-top: 0.5px solid var(--color-border); margin: 12px 0; }
+  .s-totals { display: grid; grid-template-columns: 1fr 1fr; margin-top: 4px; }
+  .s-total-cell { padding: 8px 0; }
+  .s-total-cell:first-child { border-right: 0.5px solid var(--color-border); padding-right: 20px; }
+  .s-total-cell:last-child { padding-left: 20px; }
+  .s-total-label { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .s-total-value { font-size: 26px; font-weight: 500; color: var(--color-text-primary); }
+  .s-total-value.annual { color: #185FA5; font-size: 32px; }
+  .s-note { font-size: 11px; color: var(--color-text-tertiary); margin-top: 8px; text-align: right; }
+  .ent-note-box { background: #FAEEDA; border: 0.5px solid #EF9F27; border-radius: var(--radius-md); padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #633806; line-height: 1.7; }
+  .ent-note-box.hidden { display: none; }
+  .footer { text-align: center; margin-top: 3rem; font-size: 12px; color: var(--color-text-tertiary); }
+  .footer a { color: #378ADD; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .plans-top, .ent-inner, .replace-grid, .workflow-row { grid-template-columns: 1fr; }
+    .savings-inputs { grid-template-columns: 1fr; }
+    .savings-input-cell:first-child { border-right: none; border-bottom: 0.5px solid var(--color-border); }
+    .savings-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .detection-grid { grid-template-columns: 1fr; }
+    .s-totals { grid-template-columns: 1fr; }
+    .s-total-cell:first-child { border-right: none; border-bottom: 0.5px solid var(--color-border); padding-right: 0; padding-bottom: 12px; }
+    .s-total-cell:last-child { padding-left: 0; padding-top: 12px; }
+    .replace-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Logo -->
+  <div class="logo-bar">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6L12 2z"/></svg>
+    </div>
+    <span class="logo-text">Guard Owl</span>
+    <span class="logo-sep">·</span>
+    <span class="logo-client">Enterprise pricing proposal for Kaiser</span>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">One complete security platform for Kaiser</div>
+    <div class="hero-title">Guard Owl's AI-native Security Operations Platform</div>
+    <div class="hero-desc">Guard Owl unifies guard operations, dispatch, reporting, cameras, and site intelligence into a single system. By connecting field guards, supervisors, and operators in real time, the platform streamlines communication, automates workflows, and enables faster detection and response to security incidents.</div>
+
+    <div class="hero-divider"></div>
+    <div class="hero-replace-label">Replacing & streamlining your entire workflow</div>
+
+    <div class="replace-grid">
+      <div class="replace-card old">
+        <div class="replace-card-label">Currently using</div>
+        <div class="replace-card-name">Resolver Kroll + TrackTik</div>
+        <ul class="replace-card-items">
+          <li><span style="color:#A32D2D;font-size:10px;margin-top:2px">✕</span>Two separate platforms to manage</li>
+          <li><span style="color:#A32D2D;font-size:10px;margin-top:2px">✕</span>Data siloed across systems</li>
+          <li><span style="color:#A32D2D;font-size:10px;margin-top:2px">✕</span>Manual handoffs between guard ops & risk</li>
+          <li><span style="color:#A32D2D;font-size:10px;margin-top:2px">✕</span>Slow incident escalation & reporting</li>
+          <li><span style="color:#A32D2D;font-size:10px;margin-top:2px">✕</span>Two vendor contracts & support teams</li>
+          <li><span style="color:#A32D2D;font-size:10px;margin-top:2px">✕</span>No unified AI layer across operations</li>
+        </ul>
+      </div>
+      <div class="replace-arrow">
+        <div class="replace-arrow-inner">→</div>
+      </div>
+      <div class="replace-card new">
+        <div class="replace-card-label">With Guard Owl</div>
+        <div class="replace-card-name">One unified platform</div>
+        <ul class="replace-card-items">
+          <li><span style="color:#0F6E56;font-size:10px;margin-top:2px">✓</span>Single platform for ops, risk & cameras</li>
+          <li><span style="color:#0F6E56;font-size:10px;margin-top:2px">✓</span>Real-time data unified across all sites</li>
+          <li><span style="color:#0F6E56;font-size:10px;margin-top:2px">✓</span>Automated workflows from field to command</li>
+          <li><span style="color:#0F6E56;font-size:10px;margin-top:2px">✓</span>AI-powered incident detection & escalation</li>
+          <li><span style="color:#0F6E56;font-size:10px;margin-top:2px">✓</span>One vendor, one contract, one support team</li>
+          <li><span style="color:#0F6E56;font-size:10px;margin-top:2px">✓</span>AI agents across every layer of operations</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="workflow-row">
+      <div class="workflow-item">
+        <div class="workflow-icon">📍</div>
+        <div class="workflow-label">Field guards</div>
+        <div class="workflow-sub">GPS tracking, patrol routes, mobile reporting</div>
+      </div>
+      <div class="workflow-item">
+        <div class="workflow-icon">🎛️</div>
+        <div class="workflow-label">Dispatch & CAD</div>
+        <div class="workflow-sub">AI dispatch agents, real-time coordination</div>
+      </div>
+      <div class="workflow-item">
+        <div class="workflow-icon">📷</div>
+        <div class="workflow-label">Site intelligence</div>
+        <div class="workflow-sub">Camera integration, AI detection modules</div>
+      </div>
+      <div class="workflow-item">
+        <div class="workflow-icon">📊</div>
+        <div class="workflow-label">Risk & compliance</div>
+        <div class="workflow-sub">Incident analysis, audit trails, executive reports</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plans -->
+  <p class="section-label">Choose a plan</p>
+  <div class="plans-top">
+    <div class="plan-card selected" onclick="selectPlan('core',this)">
+      <div class="plan-name">Core</div>
+      <span class="plan-badge badge-core">Core</span>
+      <div class="plan-pricing">$500 base / month<br>$25/user (10–100) · $20 (101–250) · $17 (251+)</div>
+      <hr class="plan-divider">
+      <ul class="feature-list">
+        <li><span class="dot dot-blue"></span>Real-time GPS tracking</li>
+        <li><span class="dot dot-blue"></span>Geofencing alerts</li>
+        <li><span class="dot dot-blue"></span>Mobile patrol routes & nav</li>
+        <li><span class="dot dot-blue"></span>Patrol checkpoint verification</li>
+        <li><span class="dot dot-blue"></span>Automated guard scheduling</li>
+        <li><span class="dot dot-blue"></span>Shift & coverage management</li>
+        <li><span class="dot dot-blue"></span>AI-powered incident reporting</li>
+        <li><span class="dot dot-blue"></span>Multi-language translation</li>
+        <li><span class="dot dot-blue"></span>Real-time report delivery</li>
+        <li><span class="dot dot-blue"></span>Client transparency portal</li>
+        <li><span class="dot dot-blue"></span>24/7 operations center</li>
+        <li><span class="dot dot-blue"></span>Guard mobile app</li>
+        <li><span class="dot dot-blue"></span>Analytics dashboard</li>
+        <li><span class="dot dot-blue"></span>Digital incident logs & audit trail</li>
+      </ul>
+    </div>
+    <div class="plan-card" onclick="selectPlan('pro',this)">
+      <div class="plan-name">Pro</div>
+      <span class="plan-badge badge-pro">Pro</span>
+      <div class="plan-pricing">$750 base / month<br>$40/user (10–100) · $35 (101–250) · $30 (251+)</div>
+      <hr class="plan-divider">
+      <ul class="feature-list">
+        <li><span class="dot dot-blue"></span>Everything in Core</li>
+        <li><span class="dot dot-purple"></span>AI-enhanced incident reports <span class="feat-label label-ai">AI</span></li>
+        <li><span class="dot dot-purple"></span>AI supervision agent <span class="feat-label label-ai">AI</span></li>
+        <li><span class="dot dot-purple"></span>AI dispatch agent <span class="feat-label label-ai">AI</span></li>
+        <li><span class="dot dot-purple"></span>Automated anomaly detection <span class="feat-label label-ai">AI</span></li>
+        <li><span class="dot dot-purple"></span>Predictive scheduling optimization <span class="feat-label label-ai">AI</span></li>
+        <li><span class="dot dot-blue"></span>CAD (Computer-Aided Dispatch)</li>
+        <li><span class="dot dot-blue"></span>Advanced analytics & reporting</li>
+        <li><span class="dot dot-blue"></span>Priority 24/7 support</li>
+      </ul>
+    </div>
+    <div class="plan-card" onclick="selectPlan('complete',this)">
+      <div class="plan-name">Complete Nest</div>
+      <span class="plan-badge badge-complete">Complete</span>
+      <div class="plan-pricing">$1,500 base / month<br>$55/user (10–100) · $48 (101–250) · $40 (251+)</div>
+      <hr class="plan-divider">
+      <ul class="feature-list">
+        <li><span class="dot dot-green"></span>Everything in Pro</li>
+        <li><span class="dot dot-green"></span>Full AI agent suite <span class="feat-label label-ai">AI</span></li>
+        <li><span class="dot dot-green"></span>AI workforce intelligence <span class="feat-label label-ai">AI</span></li>
+        <li><span class="dot dot-green"></span>Billing & payroll tracking <span class="feat-label label-new">New</span></li>
+        <li><span class="dot dot-green"></span>Automated payroll export</li>
+        <li><span class="dot dot-green"></span>Client billing automation</li>
+        <li><span class="dot dot-green"></span>White-label client portal</li>
+        <li><span class="dot dot-green"></span>Custom integrations & API</li>
+        <li><span class="dot dot-green"></span>Dedicated success manager</li>
+        <li><span class="dot dot-green"></span>Revenue sharing opportunities</li>
+        <li><span class="dot dot-green"></span>Enterprise SLA & priority support</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Enterprise -->
+  <div class="plan-enterprise" onclick="selectPlan('enterprise',this)">
+    <div class="ent-header">
+      <div><div class="plan-name">Enterprise</div><span class="plan-badge badge-enterprise">Enterprise</span></div>
+      <div class="ent-price-note">Custom build-out · $25,000–$50,000/month<br>Transitions to Complete Nest pricing after build</div>
+    </div>
+    <div class="ent-inner">
+      <div>
+        <div class="ent-col-label">Complete Nest included</div>
+        <ul class="feature-list">
+          <li><span class="dot dot-amber"></span>Everything in Complete Nest</li>
+          <li><span class="dot dot-amber"></span>Full AI agent suite <span class="feat-label label-ai">AI</span></li>
+          <li><span class="dot dot-amber"></span>Billing & payroll tracking</li>
+          <li><span class="dot dot-amber"></span>White-label client portal</li>
+          <li><span class="dot dot-amber"></span>Dedicated success manager</li>
+          <li><span class="dot dot-amber"></span>Enterprise SLA & support</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ent-col-label">Custom risk & analytics</div>
+        <ul class="feature-list">
+          <li><span class="dot dot-amber"></span>Risk intelligence dashboard</li>
+          <li><span class="dot dot-amber"></span>Compliance & audit reporting</li>
+          <li><span class="dot dot-amber"></span>Incident trend analysis</li>
+          <li><span class="dot dot-amber"></span>Multi-site risk scoring</li>
+          <li><span class="dot dot-amber"></span>Executive reporting suite</li>
+          <li><span class="dot dot-amber"></span>Regulatory compliance exports</li>
+          <li><span class="dot dot-amber"></span>Historical data warehouse</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ent-col-label">Custom build-out</div>
+        <ul class="feature-list">
+          <li><span class="dot dot-amber"></span>Custom platform build-out <span class="feat-label label-custom">Custom</span></li>
+          <li><span class="dot dot-amber"></span>Tailored workflows & automation <span class="feat-label label-custom">Custom</span></li>
+          <li><span class="dot dot-amber"></span>Custom integrations scoped to ops <span class="feat-label label-custom">Custom</span></li>
+          <li><span class="dot dot-amber"></span>Dedicated build team & timeline</li>
+          <li><span class="dot dot-amber"></span>Transitions to Complete Nest post-build</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users -->
+  <p class="section-label">Number of users</p>
+  <div class="users-block">
+    <div class="slider-row">
+      <span class="slider-end">10</span>
+      <input type="range" min="10" max="1000" value="300" step="1" id="userSlider" oninput="syncSlider()">
+      <span class="slider-end">1,000</span>
+      <div class="user-count-display"><span id="userCount">300</span> <span>users</span></div>
+    </div>
+    <div class="custom-users-row">
+      <label>Need more than 1,000 users? Enter exact count:</label>
+      <input type="number" id="customUsers" min="1" placeholder="e.g. 1,500" oninput="syncCustom()">
+    </div>
+  </div>
+
+  <!-- Owl Vision module -->
+  <p class="section-label">Add-on module</p>
+  <div class="mod-row" id="mod-vision">
+    <div class="mod-top" onclick="toggleVision()">
+      <div class="mod-info">
+        <div class="mod-name" id="vision-title">Camera integration layer</div>
+        <div class="mod-desc">Connect existing camera infrastructure directly into Guard Owl. Pricing depends on number of sites, cameras per site, and detection modules selected.</div>
+      </div>
+      <div class="mod-right">
+        <div class="mod-price">$250 / site / month<br><span style="font-size:11px;color:var(--color-text-tertiary)">base · varies by config</span></div>
+        <div class="toggle" id="toggle-vision"></div>
+      </div>
+    </div>
+    <div class="mod-expanded" id="vision-expanded">
+      <div class="mod-exp-label">Number of sites</div>
+      <div class="vision-slider-row">
+        <span style="font-size:12px;color:var(--color-text-secondary)">1</span>
+        <input type="range" min="1" max="50" value="1" step="1" id="visionSites" oninput="updateVisionDisplay()">
+        <span style="font-size:12px;color:var(--color-text-secondary)">50</span>
+        <div class="vision-site-count"><span id="visionSiteCount">1</span> <span>site</span></div>
+      </div>
+      <div class="vision-note">Base rate of $250/site/month covers the integration layer. Pricing varies per site based on number of cameras and detection modules activated — final quote confirmed after site assessment.</div>
+      <div class="mod-exp-label">Detection modules</div>
+      <div class="detection-grid">
+        <div class="detection-item" onclick="this.classList.toggle('checked');updateCalc()"><div class="det-box"><div class="det-inner"></div></div><div class="det-label">Motion & perimeter detection</div></div>
+        <div class="detection-item" onclick="this.classList.toggle('checked');updateCalc()"><div class="det-box"><div class="det-inner"></div></div><div class="det-label">Intrusion & trespassing alerts</div></div>
+        <div class="detection-item" onclick="this.classList.toggle('checked');updateCalc()"><div class="det-box"><div class="det-inner"></div></div><div class="det-label">Facial recognition <span class="feat-label label-ai">AI</span></div></div>
+        <div class="detection-item" onclick="this.classList.toggle('checked');updateCalc()"><div class="det-box"><div class="det-inner"></div></div><div class="det-label">License plate recognition <span class="feat-label label-ai">AI</span></div></div>
+        <div class="detection-item" onclick="this.classList.toggle('checked');updateCalc()"><div class="det-box"><div class="det-inner"></div></div><div class="det-label">Loitering & crowd detection <span class="feat-label label-ai">AI</span></div></div>
+        <div class="detection-item" onclick="this.classList.toggle('checked');updateCalc()"><div class="det-box"><div class="det-inner"></div></div><div class="det-label">Weapon & threat detection <span class="feat-label label-ai">AI</span></div></div>
+        <div class="detection-item" onclick="this.classList.toggle('checked');updateCalc()"><div class="det-box"><div class="det-inner"></div></div><div class="det-label">Behavioral anomaly analysis <span class="feat-label label-ai">AI</span></div></div>
+        <div class="detection-item" onclick="this.classList.toggle('checked');updateCalc()"><div class="det-box"><div class="det-inner"></div></div><div class="det-label">Smoke & fire detection</div></div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--color-text-tertiary);line-height:1.6;">Each detection module and camera count is scoped individually — final pricing confirmed after site walk.</div>
+    </div>
+  </div>
+
+  <!-- Savings -->
+  <p class="section-label">What are you currently paying?</p>
+  <div class="savings-section">
+    <div class="savings-header">
+      <div class="savings-header-title">Annual savings vs. Resolver Kroll + TrackTik</div>
+      <div class="savings-header-sub">Enter your current annual contract value for each platform — we'll show your 1-year and 3-year savings.</div>
+    </div>
+    <div class="savings-inputs">
+      <div class="savings-input-cell">
+        <div class="savings-input-label"><strong>Resolver Kroll</strong> — risk & incident management</div>
+        <div class="savings-input-sublabel">Annual contract value</div>
+        <div class="savings-input-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="resolverCost" placeholder="e.g. 144,000" oninput="updateSavings()">
+          <span class="suffix">/ year</span>
+        </div>
+      </div>
+      <div class="savings-input-cell">
+        <div class="savings-input-label"><strong>TrackTik</strong> — guard operations management</div>
+        <div class="savings-input-sublabel">Annual contract value</div>
+        <div class="savings-input-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="tracktikCost" placeholder="e.g. 60,000" oninput="updateSavings()">
+          <span class="suffix">/ year</span>
+        </div>
+      </div>
+    </div>
+    <div class="savings-result" id="savingsResult">
+      <div class="savings-grid">
+        <div class="savings-metric"><div class="savings-metric-label">Current annual spend</div><div class="savings-metric-value" id="sv-current-annual">—</div></div>
+        <div class="savings-metric"><div class="savings-metric-label">Guard Owl annual</div><div class="savings-metric-value" id="sv-go-annual">—</div></div>
+        <div class="savings-metric"><div class="savings-metric-label">Annual savings</div><div class="savings-metric-value positive" id="sv-annual-saved">—</div></div>
+        <div class="savings-metric"><div class="savings-metric-label">3-year savings</div><div class="savings-metric-value positive" id="sv-3yr">—</div></div>
+      </div>
+      <div class="savings-tagline" id="sv-tagline">Enter your current costs above to calculate your annual savings.</div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <div class="s-row" id="s-base-row"><span>Base fee (<span id="s-plan-name">Core</span>)</span><span id="s-base">$500 / mo</span></div>
+    <div class="s-row" id="s-users-row"><span>Users — <span id="s-guards">300</span> × $<span id="s-rate">17</span>/user</span><span id="s-users">$5,100 / mo</span></div>
+    <div class="s-row hidden" id="s-buildout-row"><span>Custom build-out (estimated range)</span><span>$25,000–$50,000 / mo</span></div>
+    <div class="s-row hidden" id="s-vision-row"><span>Owl Vision — <span id="s-vision-sites">1</span> site(s) × $250</span><span id="s-vision-total">$250 / mo</span></div>
+    <hr class="s-divider">
+    <div class="s-totals">
+      <div class="s-total-cell">
+        <div class="s-total-label">Monthly total</div>
+        <div class="s-total-value" id="s-monthly-total">$5,600</div>
+      </div>
+      <div class="s-total-cell">
+        <div class="s-total-label">Annual contract value</div>
+        <div class="s-total-value annual" id="s-annual-total">$67,200</div>
+      </div>
+    </div>
+    <div class="s-note" id="s-note">Tier: $17/user · 251+ users</div>
+    <div class="ent-note-box hidden" id="ent-note-box">Build-out phase: $25,000–$50,000/month depending on scope. Includes custom risk & analytics platform, tailored workflows, and full integrations. Once complete, billing transitions to <strong>Complete Nest pricing</strong> based on your user count.</div>
+  </div>
+
+  <div class="footer">
+    Built for Kaiser by <a href="https://guardowlco.com" target="_blank">Guard Owl</a> · <a href="https://guardowlco.com/demo" target="_blank">Book a demo</a> · guardowlco.com
+  </div>
+
+</div>
+<script>
+const plans = {
+  core:       { base: 500,  name: 'Core',          tiers: [{max:100,rate:25},{max:250,rate:20},{max:Infinity,rate:17}] },
+  pro:        { base: 750,  name: 'Pro',            tiers: [{max:100,rate:40},{max:250,rate:35},{max:Infinity,rate:30}] },
+  complete:   { base: 1500, name: 'Complete Nest',  tiers: [{max:100,rate:55},{max:250,rate:48},{max:Infinity,rate:40}] },
+  enterprise: { base: null, name: 'Enterprise',     tiers: [{max:100,rate:55},{max:250,rate:48},{max:Infinity,rate:40}] }
+};
+let currentPlan = 'core', visionOn = false, useCustom = false;
+
+function selectPlan(plan, el) {
+  currentPlan = plan;
+  document.querySelectorAll('.plan-card, .plan-enterprise').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  updateCalc();
+}
+function toggleVision() {
+  visionOn = !visionOn;
+  document.getElementById('toggle-vision').classList.toggle('on', visionOn);
+  document.getElementById('vision-expanded').classList.toggle('visible', visionOn);
+  document.getElementById('mod-vision').classList.toggle('active', visionOn);
+  document.getElementById('vision-title').textContent = visionOn ? 'Owl Vision' : 'Camera integration layer';
+  updateCalc();
+}
+function updateVisionDisplay() {
+  document.getElementById('visionSiteCount').textContent = document.getElementById('visionSites').value;
+  updateCalc();
+}
+function syncSlider() { useCustom = false; document.getElementById('customUsers').value = ''; updateCalc(); }
+function syncCustom() {
+  const val = parseInt(document.getElementById('customUsers').value);
+  useCustom = !!(val && val > 0);
+  if (useCustom) document.getElementById('userSlider').value = Math.min(val, 1000);
+  updateCalc();
+}
+function getUsers() {
+  if (useCustom) { const v = parseInt(document.getElementById('customUsers').value); return v > 0 ? v : parseInt(document.getElementById('userSlider').value); }
+  return parseInt(document.getElementById('userSlider').value);
+}
+function getRate(pk, u) { for (const t of plans[pk].tiers) { if (u <= t.max) return t.rate; } }
+function getTierNote(pk, u) {
+  const t = plans[pk].tiers;
+  if (u <= 100) return 'Tier: $' + t[0].rate + '/user · 10–100 users';
+  if (u <= 250) return 'Tier: $' + t[1].rate + '/user · 101–250 users';
+  return 'Tier: $' + t[2].rate + '/user · 251+ users';
+}
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function getGoMonthly() {
+  if (currentPlan === 'enterprise') return null;
+  const u = getUsers(), rate = getRate(currentPlan, u);
+  const sites = parseInt(document.getElementById('visionSites').value) || 1;
+  return plans[currentPlan].base + (u * rate) + (visionOn ? sites * 250 : 0);
+}
+function updateSavings() {
+  const rA = parseFloat(document.getElementById('resolverCost').value) || 0;
+  const tA = parseFloat(document.getElementById('tracktikCost').value) || 0;
+  const cur = rA + tA;
+  const result = document.getElementById('savingsResult');
+  if (cur === 0) {
+    ['sv-current-annual','sv-go-annual','sv-annual-saved','sv-3yr'].forEach(id => document.getElementById(id).textContent = '—');
+    document.getElementById('sv-annual-saved').className = 'savings-metric-value positive';
+    document.getElementById('sv-3yr').className = 'savings-metric-value positive';
+    document.getElementById('sv-tagline').textContent = 'Enter your current costs above to calculate your annual savings.';
+    document.getElementById('sv-tagline').className = 'savings-tagline';
+    result.className = 'savings-result'; return;
+  }
+  document.getElementById('sv-current-annual').textContent = fmt(cur);
+  const goMo = getGoMonthly();
+  if (goMo === null) {
+    document.getElementById('sv-go-annual').textContent = '$300k–$600k';
+    document.getElementById('sv-annual-saved').textContent = '—';
+    document.getElementById('sv-3yr').textContent = '—';
+    document.getElementById('sv-tagline').textContent = 'Enterprise build-out — contact us for a custom annual quote.';
+    document.getElementById('sv-tagline').className = 'savings-tagline';
+    result.className = 'savings-result'; return;
+  }
+  const goA = goMo * 12, saved = cur - goA;
+  document.getElementById('sv-go-annual').textContent = fmt(goA);
+  document.getElementById('sv-annual-saved').textContent = saved >= 0 ? fmt(saved) : '-' + fmt(Math.abs(saved));
+  document.getElementById('sv-annual-saved').className = 'savings-metric-value ' + (saved >= 0 ? 'positive' : 'negative');
+  document.getElementById('sv-3yr').textContent = saved >= 0 ? fmt(saved * 3) : '-' + fmt(Math.abs(saved * 3));
+  document.getElementById('sv-3yr').className = 'savings-metric-value ' + (saved >= 0 ? 'positive' : 'negative');
+  if (saved > 0) {
+    result.className = 'savings-result has-savings';
+    document.getElementById('sv-tagline').textContent = 'Kaiser saves ' + fmt(saved) + ' every year — one platform replacing two, with more capability.';
+    document.getElementById('sv-tagline').className = 'savings-tagline win';
+  } else {
+    result.className = 'savings-result';
+    document.getElementById('sv-tagline').textContent = 'Guard Owl consolidates Resolver Kroll + TrackTik into one AI-native platform.';
+    document.getElementById('sv-tagline').className = 'savings-tagline';
+  }
+}
+function updateCalc() {
+  const u = getUsers();
+  document.getElementById('userCount').textContent = u.toLocaleString();
+  const isEnt = currentPlan === 'enterprise';
+  const pk = isEnt ? 'complete' : currentPlan;
+  const rate = getRate(pk, u);
+  const userCost = u * rate;
+  const sites = parseInt(document.getElementById('visionSites').value) || 1;
+  const vCost = visionOn ? sites * 250 : 0;
+  const monthly = plans[pk].base + userCost + vCost;
+  document.getElementById('s-plan-name').textContent = plans[currentPlan].name;
+  document.getElementById('s-guards').textContent = u.toLocaleString();
+  document.getElementById('s-rate').textContent = rate;
+  document.getElementById('s-users').textContent = fmt(userCost) + ' / mo';
+  document.getElementById('s-note').textContent = getTierNote(pk, u);
+  document.getElementById('s-buildout-row').classList.toggle('hidden', !isEnt);
+  document.getElementById('s-base-row').classList.toggle('hidden', isEnt);
+  document.getElementById('s-users-row').classList.toggle('hidden', isEnt);
+  document.getElementById('ent-note-box').classList.toggle('hidden', !isEnt);
+  if (isEnt) {
+    document.getElementById('s-monthly-total').textContent = '$25,000–$50,000';
+    document.getElementById('s-annual-total').textContent = '$300k–$600k';
+    document.getElementById('s-note').textContent = 'Build-out phase · transitions to Complete Nest pricing after build';
+  } else {
+    document.getElementById('s-base').textContent = fmt(plans[pk].base) + ' / mo';
+    document.getElementById('s-monthly-total').textContent = fmt(monthly);
+    document.getElementById('s-annual-total').textContent = fmt(monthly * 12);
+  }
+  document.getElementById('s-vision-row').classList.toggle('hidden', !visionOn);
+  if (visionOn) {
+    document.getElementById('s-vision-sites').textContent = sites;
+    document.getElementById('s-vision-total').textContent = fmt(vCost) + ' / mo';
+  }
+  updateSavings();
+}
+updateCalc();
+</script>
+</body>
+</html>
